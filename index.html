@@ -1089,6 +1089,101 @@
 
         // 5. Tự động cập nhật năm ở Footer
         document.getElementById('currentYear').innerText = new Date().getFullYear();
+    // 6. Xử lý Modal hiển thị chi tiết dự án
+        const projectsData = {
+            "1": {
+                title: "TVC Quảng Cáo Đồ Uống",
+                image: "https://placehold.co/800x450/e2e8f0/475569?text=TVC+Quảng+Cáo",
+                client: "Thương hiệu Nước giải khát ABC",
+                role: "Video Editor & Colorist",
+                desc: "Dự án sản xuất TVC quảng cáo cho thương hiệu đồ uống giải nhiệt mùa hè. Yêu cầu đặt ra là mang lại cảm giác sảng khoái, năng động và trẻ trung. Quá trình làm việc bao gồm việc chọn lọc source quay, cắt ghép tạo nhịp điệu nhanh (fast-paced), thêm sound effects và đặc biệt là công đoạn Color Grading rực rỡ, đậm chất mùa hè để tôn lên màu sắc của sản phẩm.",
+                tools: ["Premiere Pro", "DaVinci Resolve", "After Effects"]
+            },
+            "2": {
+                title: "Bộ Nhận Diện Cafe M",
+                image: "https://placehold.co/800x450/e2e8f0/475569?text=Brand+Identity",
+                client: "Chuỗi Cafe M",
+                role: "Graphic Designer",
+                desc: "Xây dựng toàn bộ hệ thống nhận diện thương hiệu cho chuỗi Cafe M hướng tới giới trẻ. Dự án bao gồm việc thiết kế Logo mang phong cách Minimalist, menu thức uống, đồng phục nhân viên, ly giấy, bao bì take-away và các template đăng bài trên Social Media (Facebook, Instagram).",
+                tools: ["Illustrator", "Photoshop"]
+            },
+            "3": {
+                title: "Motion Graphic Ứng Dụng",
+                image: "https://placehold.co/800x450/e2e8f0/475569?text=Motion+Video",
+                client: "App Tài chính FinX",
+                role: "Motion Designer",
+                desc: "Sản xuất video hoạt hình (2D Animation) dài 60s để giải thích các tính năng cốt lõi của ứng dụng tài chính cá nhân cho người dùng mới. Từ khâu vẽ Storyboard, chuẩn bị vector assets đến việc tạo chuyển động mượt mà và đồng bộ âm thanh (lip-sync, sound effects).",
+                tools: ["After Effects", "Illustrator", "Audition"]
+            },
+            "4": {
+                title: "Concept Ảnh Mỹ Phẩm",
+                image: "https://placehold.co/800x450/e2e8f0/475569?text=Product+Photo",
+                client: "Thương hiệu Mỹ phẩm Glow",
+                role: "Photographer & Retoucher",
+                desc: "Lên ý tưởng concept, setup studio (ánh sáng, phông nền, props) để chụp bộ ảnh sản phẩm phục vụ cho chiến dịch ra mắt dòng kem dưỡng da mới. Sau đó tiến hành Retouch chi tiết (xóa bụi, làm mịn, chỉnh màu) để đảm bảo hình ảnh sản phẩm sang trọng và thu hút nhất trên nền tảng thương mại điện tử.",
+                tools: ["Camera Sony", "Lightroom", "Photoshop"]
+            },
+            "5": {
+                title: "Chuỗi Video Tiktok Viral",
+                image: "https://placehold.co/800x450/e2e8f0/475569?text=Short+Video",
+                client: "Shop Thời trang X",
+                role: "Content Creator & Editor",
+                desc: "Biên tập và dựng chuỗi 10 video dạng ngắn (vertical video) cho nền tảng TikTok và Reels. Tập trung vào các kỹ thuật giật beat, transition trending và storytelling hài hước để tăng độ viral. Kết quả: Chiến dịch đạt hơn 2 triệu lượt xem tự nhiên và tăng 30% doanh số bán hàng trong tháng.",
+                tools: ["Capcut PC", "Premiere Pro"]
+            },
+            "6": {
+                title: "Key Visual Sự Kiện Âm Nhạc",
+                image: "https://placehold.co/800x450/e2e8f0/475569?text=Poster+Design",
+                client: "Đại nhạc hội Summer Vibes",
+                role: "Visual Artist",
+                desc: "Ứng dụng kỹ thuật Photo Manipulation để thiết kế ấn phẩm Key Visual (hình ảnh chủ đạo) cho một đại nhạc hội EDM mùa hè. Kết hợp nhiều stock ảnh khác nhau, xử lý ánh sáng (lighting), đổ bóng (shadows) và blending màu sắc để tạo ra một không gian siêu thực, bùng nổ năng lượng.",
+                tools: ["Photoshop"]
+            }
+        };
+
+        const modal = document.getElementById('project-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const projectBtns = document.querySelectorAll('.project-overlay .btn');
+
+        // Mở modal và nạp dữ liệu
+        projectBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const projectId = btn.getAttribute('data-project');
+                const data = projectsData[projectId];
+                
+                if(data) {
+                    document.getElementById('modal-img').src = data.image;
+                    document.getElementById('modal-title').innerText = data.title;
+                    document.getElementById('modal-desc').innerText = data.desc;
+                    
+                    document.getElementById('modal-meta').innerHTML = `
+                        <span><i class="fa-solid fa-briefcase"></i> ${data.client}</span>
+                        <span><i class="fa-solid fa-user-pen"></i> ${data.role}</span>
+                    `;
+                    
+                    const toolsHtml = data.tools.map(tool => `<span class="project-tag">${tool}</span>`).join('');
+                    document.getElementById('modal-tools').innerHTML = toolsHtml;
+
+                    modal.classList.add('show');
+                    document.body.style.overflow = 'hidden'; 
+                }
+            });
+        });
+
+        // Đóng modal
+        const closeProjectModal = () => {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        };
+
+        closeModalBtn.addEventListener('click', closeProjectModal);
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeProjectModal();
+            }
+        });
 
     </script>
 </body>
