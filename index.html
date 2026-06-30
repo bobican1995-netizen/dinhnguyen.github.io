@@ -673,6 +673,111 @@
                 padding: 30px 20px;
             }
         }
+
+        /* === 7. MODAL (PROJECT DETAILS) === */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.85);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: var(--surface-color);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 20px;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(30px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #fff;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            background: var(--accent-color);
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .modal-info {
+            padding: 30px;
+        }
+
+        .modal-info h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+        }
+
+        .modal-meta span {
+            background: var(--bg-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .modal-description {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .modal-tools h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 <body>
@@ -715,8 +820,8 @@
                 </div>
             </div>
             <div class="hero-img-box fade-in">
-                <!-- Dùng ảnh placeholder như yêu cầu -->
-               <img src="400x400.png" alt="Trương Đình Nguyên" class="hero-img">
+                <!-- Đã cập nhật ảnh placeholder hiển thị tốt hơn trong môi trường xem trước -->
+                <img src="https://placehold.co/400x400/1e3a8a/ffffff?text=Avatar" alt="Trương Đình Nguyên" class="hero-img">
             </div>
         </div>
     </section>
@@ -807,7 +912,7 @@
                     <div class="project-img-wrapper">
                         <img src="https://placehold.co/600x400/e2e8f0/475569?text=TVC+Quảng+Cáo" alt="Dự án 1">
                         <div class="project-overlay">
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                            <a href="#" class="btn btn-primary" data-project="1">Xem chi tiết</a>
                         </div>
                     </div>
                     <div class="project-info">
@@ -824,7 +929,7 @@
                     <div class="project-img-wrapper">
                         <img src="https://placehold.co/600x400/e2e8f0/475569?text=Brand+Identity" alt="Dự án 2">
                         <div class="project-overlay">
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                            <a href="#" class="btn btn-primary" data-project="2">Xem chi tiết</a>
                         </div>
                     </div>
                     <div class="project-info">
@@ -841,7 +946,7 @@
                     <div class="project-img-wrapper">
                         <img src="https://placehold.co/600x400/e2e8f0/475569?text=Motion+Video" alt="Dự án 3">
                         <div class="project-overlay">
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                            <a href="#" class="btn btn-primary" data-project="3">Xem chi tiết</a>
                         </div>
                     </div>
                     <div class="project-info">
@@ -858,7 +963,7 @@
                     <div class="project-img-wrapper">
                         <img src="https://placehold.co/600x400/e2e8f0/475569?text=Product+Photo" alt="Dự án 4">
                         <div class="project-overlay">
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                            <a href="#" class="btn btn-primary" data-project="4">Xem chi tiết</a>
                         </div>
                     </div>
                     <div class="project-info">
@@ -875,7 +980,7 @@
                     <div class="project-img-wrapper">
                         <img src="https://placehold.co/600x400/e2e8f0/475569?text=Short+Video" alt="Dự án 5">
                         <div class="project-overlay">
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                            <a href="#" class="btn btn-primary" data-project="5">Xem chi tiết</a>
                         </div>
                     </div>
                     <div class="project-info">
@@ -892,7 +997,7 @@
                     <div class="project-img-wrapper">
                         <img src="https://placehold.co/600x400/e2e8f0/475569?text=Poster+Design" alt="Dự án 6">
                         <div class="project-overlay">
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                            <a href="#" class="btn btn-primary" data-project="6">Xem chi tiết</a>
                         </div>
                     </div>
                     <div class="project-info">
@@ -962,6 +1067,31 @@
             <p>&copy; <span id="currentYear"></span> Trương Đình Nguyên. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- 7. PROJECT MODAL -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal" aria-label="Đóng">&times;</span>
+            <div class="modal-body">
+                <img id="modal-img" src="" alt="Project Image">
+                <div class="modal-info">
+                    <h2 id="modal-title">Tiêu đề dự án</h2>
+                    <div class="modal-meta" id="modal-meta">
+                        <!-- Nơi chèn meta data -->
+                    </div>
+                    <div class="modal-description" id="modal-desc">
+                        Mô tả chi tiết dự án.
+                    </div>
+                    <div class="modal-tools">
+                        <h4>Công cụ sử dụng:</h4>
+                        <div class="project-tags" id="modal-tools">
+                            <!-- Nơi chèn tags -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- === JAVASCRIPT === -->
     <script>
@@ -1089,7 +1219,8 @@
 
         // 5. Tự động cập nhật năm ở Footer
         document.getElementById('currentYear').innerText = new Date().getFullYear();
-    // 6. Xử lý Modal hiển thị chi tiết dự án
+
+        // 6. Xử lý Modal hiển thị chi tiết dự án
         const projectsData = {
             "1": {
                 title: "TVC Quảng Cáo Đồ Uống",
